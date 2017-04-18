@@ -2,6 +2,8 @@ import urllib
 from flask import session, redirect, url_for, escape, request, render_template, make_response
 
 from requestbin import app, db
+from requestbin.crossdomain import crossdomain
+
 
 def update_recent_bins(name):
     if 'recent' not in session:
@@ -32,6 +34,7 @@ def home():
 
 
 @app.endpoint('views.bin')
+@crossdomain(origin='*')
 def bin(name):
     try:
         bin = db.lookup_bin(name)
